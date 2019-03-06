@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  display: flex;
+  border: solid 3px red;
+  min-height: 750px;
 }
 
 .App-logo {
@@ -29,5 +32,51 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.map__container {
+  border: solid 2px sienna;
+  width: 70%;
+}
+
+.info__container {
+  border: solid thin green;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+
+.alerts__container {
+  border: solid thin peru;
+  flex: 1;
+}
+
+.alerts__number {
+  font-size: 120px;
+  border: solid 8px red;
+  color: red;
+  border-radius: 50%;
+  margin: auto;
+  height: 150px;
+  width: 150px;
+}
+
+.vehicleInfo__container {
+  border: solid thin purple;
+  flex: 1;
+}
+
+@media only screen and (max-width: 1000px) {
+  .App {
+    flex-direction: column;
+  }
+
+  .map__container {
+    width: 100%;
+  }
+
+  .info__container {
+    width: 100%;
   }
 }
