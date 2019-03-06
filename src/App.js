@@ -52,7 +52,7 @@ class App extends Component {
         <div className="info__container">
           <div className="alerts__container">
             <h1>Alerts</h1>
-            <div className="alerts__number">3</div>
+            <div className="alerts__number">{this.state.items.length}</div>
             <p>Alert description Alert description Alert description Alert description Alert description</p>
           </div>
           <div className="vehicleInfo__container">
