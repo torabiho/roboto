@@ -80,6 +80,12 @@
           }
         });
       }
+
+      function getDate() {
+        var d = new Date();
+        var time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
+        return time;
+      }
         
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
@@ -90,11 +96,12 @@
             timesRun += 1;
 
             if(timesRun === 150){
-                parent.postMessage({ text: "Truck has been diverged", key: Date.now() },"*");
+                parent.postMessage({ text: "Truck has been diverged", key: getDate() },"*");
             }
 
             if(timesRun === 199){
                 clearInterval(interval);
+                parent.postMessage({ text: "Truck has stopped", key: getDate() },"*");
             }
             count = (count + 1) % 200;
             var icons = line.get('icons');
