@@ -63,8 +63,6 @@ h1 {
 
 .alerts__number {
   font-size: 120px;
-  border: solid 8px red;
-  color: red;
   border-radius: 50%;
   margin: auto;
   height: 150px;
@@ -72,6 +70,16 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.alerts__number.green {
+  border: solid 8px #41ad49;
+  color: #41ad49;
+}
+
+.alerts__number.red {
+  border: solid 8px red;
+  color: red;
 }
 
 .vehicleInfo__container {
@@ -91,5 +99,9 @@ h1 {
 
   .info__container {
     width: 100%;
+  }
+
+  .alerts__container {
+    margin-top: 20px;
   }
 }
