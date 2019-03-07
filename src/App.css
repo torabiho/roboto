@@ -43,6 +43,12 @@ h1 {
   margin-right: 20px;
 }
 
+.map__header__container {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 .map__title {
   margin-top: 0;
   text-align: left;
