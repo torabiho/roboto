@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   display: flex;
-  border: solid 3px red;
   min-height: 750px;
 }
 
@@ -35,21 +34,31 @@
   }
 }
 
+h1 {
+  color: #1d3567;
+}
+
 .map__container {
-  border: solid 2px sienna;
   width: 70%;
+  margin-right: 20px;
+}
+
+.map__title {
+  margin-top: 0;
+  text-align: left;
 }
 
 .info__container {
-  border: solid thin green;
   width: 30%;
   display: flex;
   flex-direction: column;
 }
 
 .alerts__container {
-  border: solid thin peru;
+  border: solid 3px #1d3567;
   flex: 1;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .alerts__number {
@@ -66,8 +75,9 @@
 }
 
 .vehicleInfo__container {
-  border: solid thin purple;
+  border: solid 3px #1d3567;
   flex: 1;
+  padding: 20px;
 }
 
 @media only screen and (max-width: 1000px) {
