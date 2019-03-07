@@ -10,12 +10,12 @@ class TodoList extends Component {
         <div className="header">
           <form onSubmit={this.props.addItem}>
             <input
-              placeholder="Task"
+              placeholder="Alert"
               ref={this.props.inputElement}
               value={this.props.currentItem.text}
               onChange={this.props.handleInput}
             />
-            <button type="submit"> Alert Description </button>
+            <button type="submit">Description </button>
           </form>
         </div>
       </div>

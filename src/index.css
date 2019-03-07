@@ -13,7 +13,7 @@ body {
 .todoListMain .header input {
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #FFF;
+  border: solid 1px #1d3567;
   width: 165px;
 }
 
