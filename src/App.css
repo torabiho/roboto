@@ -1,6 +1,14 @@
+.topbar {
+  background-color: #1d3567;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+}
+
 .App {
   text-align: center;
   display: flex;
+  padding: 25px 50px;
   min-height: 750px;
 }
 
