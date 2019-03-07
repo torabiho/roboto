@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import TodoList from './TodoList'
+// import TodoList from './TodoList'
 import TodoItems from './TodoItems'
 
 class App extends Component {
@@ -93,7 +93,7 @@ class App extends Component {
             <ul className="vehicleInfo__list">
               <li><b>Vehicle ID:</b> KBCD765</li>
               <li><b>Origin:</b> Robarts</li>
-              <li><b>Destination:</b> st_george</li>
+              <li><b>Destination:</b> St. George</li>
               <li><b>Departure Time:</b> 8:45 AM</li>
               <li><b>Estimated Arrival Time:</b> 9:05 PM</li>
             </ul>
