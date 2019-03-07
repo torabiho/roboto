@@ -96,6 +96,10 @@ h1 {
   color: red;
 }
 
+.alert__placeholder {
+  margin-top: 20px;
+}
+
 .alert__description {
   text-align: left;
   margin-left: 20px;

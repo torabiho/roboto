@@ -15,6 +15,29 @@ class App extends Component {
       },
     }
   }
+  componentDidMount(){
+    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+    var eventer = window[eventMethod];
+    var messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
+
+    // Listen to message from child window
+    eventer(messageEvent, e => {
+        var key = e.message ? "message" : "data";
+        var data = e[key];
+        //run function//        
+        if(data.key){
+          const newItem = data;
+          if (newItem.text !== '') {
+            const items = [...this.state.items, newItem]
+            this.setState({
+              items: items,
+              currentItem: { text: '', key: '' },
+            })
+          }
+        }
+    },false);
+  }
+
   deleteItem = key => {
     const filteredItems = this.state.items.filter(item => {
       return item.key !== key
@@ -48,28 +71,31 @@ class App extends Component {
       <div className="topbar">RoboTO</div>
       <div className="App">
         <div className="map__container">
-          <div className="map__header__container"><h1 className="map__title">Live Map</h1><TodoList
+          <div className="map__header__container"><h1 className="map__title">Live Map</h1>
+          {/* <TodoList
             addItem={this.addItem}
             inputElement={this.inputElement}
             handleInput={this.handleInput}
             currentItem={this.state.currentItem}
-          /></div>
-          <iframe title='map' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d369484.52058328013!2d-79.60103278135236!3d43.65653529382275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb90d7c63ba5%3A0x323555502ab4c477!2sToronto%2C+ON!5e0!3m2!1sen!2sca!4v1551834484898" width="100%" height="680px" frameBorder="0" style={{border:0}} allowFullScreen></iframe>
+          /> */}
+          </div>
+          {/* <iframe title='map' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d369484.52058328013!2d-79.60103278135236!3d43.65653529382275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb90d7c63ba5%3A0x323555502ab4c477!2sToronto%2C+ON!5e0!3m2!1sen!2sca!4v1551834484898" width="100%" height="680px" frameBorder="0" style={{border:0}} allowFullScreen></iframe> */}
+          <iframe title='map' src="map.html" width="100%" height="680px" frameBorder="0" style={{border:0}} allowFullScreen></iframe>
         </div>
         <div className="info__container">
           <div className="alerts__container">
             <h1>Alerts</h1>
             <div className={`alerts__number ${this.state.items.length > 0 ? 'red' : 'green' }`}>{this.state.items.length > 0 ? this.state.items.length : <img src={'images/check.png'} width="70%" alt="check" />}</div>
-            <p className={this.state.items.length > 0 ? 'alert__description' : '' }>{this.state.items.length > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</p>
+            <div className={this.state.items.length > 0 ? 'alert__description' : 'alert__placeholder' }>{this.state.items.length > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</div>
           </div>
           <div className="vehicleInfo__container">
             <h1>Vehicle Information</h1>
             <ul className="vehicleInfo__list">
               <li><b>Vehicle ID:</b> KBCD765</li>
-              <li><b>Origin:</b> Toronto</li>
-              <li><b>Destination:</b> Ottawa</li>
+              <li><b>Origin:</b> Robarts</li>
+              <li><b>Destination:</b> st_george</li>
               <li><b>Departure Time:</b> 8:45 AM</li>
-              <li><b>Estimated Arrival Time:</b> 12:55 PM</li>
+              <li><b>Estimated Arrival Time:</b> 9:05 PM</li>
             </ul>
           </div>
         </div>
