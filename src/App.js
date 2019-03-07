@@ -62,6 +62,13 @@ class App extends Component {
           </div>
           <div className="vehicleInfo__container">
             <h1>Vehicle Information</h1>
+            <ul className="vehicleInfo__list">
+              <li><b>Vehicle ID:</b> KBCD765</li>
+              <li><b>Origin:</b> Toronto</li>
+              <li><b>Destination:</b> Ottawa</li>
+              <li><b>Departure Time:</b> 8:45 AM</li>
+              <li><b>Estimated Arrival Time:</b> 12:55 PM</li>
+            </ul>
           </div>
         </div>
       </div>
