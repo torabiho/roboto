@@ -53,7 +53,7 @@ class App extends Component {
           <div className="alerts__container">
             <h1>Alerts</h1>
             <div className={`alerts__number ${this.state.items.length > 0 ? 'red' : 'green' }`}>{this.state.items.length > 0 ? this.state.items.length : <img src={'images/check.png'} width="70%" alt="check" />}</div>
-            <p>{this.state.items.length > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</p>
+            <p className={this.state.items.length > 0 ? 'alert__description' : '' }>{this.state.items.length > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</p>
           </div>
           <div className="vehicleInfo__container">
             <h1>Vehicle Information</h1>

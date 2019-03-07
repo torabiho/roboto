@@ -82,6 +82,11 @@ h1 {
   color: red;
 }
 
+.alert__description {
+  text-align: left;
+  margin-left: 20px;
+}
+
 .vehicleInfo__container {
   border: solid 3px #1d3567;
   flex: 1;
