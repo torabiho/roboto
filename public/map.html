@@ -102,6 +102,7 @@
             if(timesRun === 199){
                 clearInterval(interval);
                 parent.postMessage({ text: "Truck has stopped", key: getDate() },"*");
+                setTimeout(() => { parent.postMessage({ text: "The metal weight has decreased to 400lb  ", key: getDate() },"*"); }, 3000);
             }
             count = (count + 1) % 200;
             var icons = line.get('icons');

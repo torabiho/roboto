@@ -1,8 +1,23 @@
 .topbar {
   background-color: #1d3567;
+  display: flex;
   color: white;
   font-size: 18px;
   padding: 10px 20px;
+}
+
+.topbar__item {
+  margin-right: 40px;
+}
+
+.topbar__item:hover {
+  color: orange;
+  cursor: pointer;
+}
+
+.topbar__item.logo {
+  color: orange;
+  margin-right: 60px;
 }
 
 .App {

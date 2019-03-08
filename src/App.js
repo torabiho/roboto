@@ -68,10 +68,16 @@ class App extends Component {
   render() {
     return (
       <div className="wrapper">
-      <div className="topbar">RoboTO</div>
+      <div className="topbar">
+        <div className="topbar__item logo">RoboTO</div>
+        <div className="topbar__item">Monitor a Vehicle</div>
+        <div className="topbar__item">Add vehicle</div>
+        <div className="topbar__item">Schedule a trip</div>
+      </div>
       <div className="App">
         <div className="map__container">
           <div className="map__header__container"><h1 className="map__title">Live Map</h1>
+          <p>Find real time locations of your vehicle in your fleet below</p>
           {/* <TodoList
             addItem={this.addItem}
             inputElement={this.inputElement}
@@ -96,6 +102,7 @@ class App extends Component {
               <li><b>Destination:</b> St. George</li>
               <li><b>Departure Time:</b> 8:45 AM</li>
               <li><b>Estimated Arrival Time:</b> 9:05 PM</li>
+              <li><b>Material weight:</b> 600 lb</li>
             </ul>
           </div>
         </div>
