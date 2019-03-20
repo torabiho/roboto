@@ -1,0 +1,53 @@
+.login__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1d3567;
+  color: white;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.login__title {
+  font-size: 80px;
+  color: white;
+  margin: 0;
+}
+
+.login__subtitle {
+  margin-bottom: 40px;
+  width: 300px;
+  text-align: right;
+}
+
+.login__signup {
+  text-align: right;
+  font-weight: 200;
+  margin-top: 15px;
+}
+
+.signup_link {
+  color: lightblue;
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login__input {
+  margin-bottom: 15px;
+  height: 30px;
+  width: 300px;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.login__submit {
+  height: 40px;
+  margin-top: 30px;
+  color: #1d3567;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: orange;
+}
