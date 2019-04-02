@@ -34,16 +34,38 @@
   <body>
     <div id="map"></div>
     <script>
+    var  ac =  {lat:43.663460, lng:-79.400550};
+    var robarts = {lat:  43.664184, lng: -79.398498};
+    var st_george = {lat: 43.668264, lng:-79.400078};
+    var bahen = {lat:43.659779, lng:-79.396848};
+
+    var trips = [
+       [st_george, bahen], // Main use case
+       [{lat:43.655024, lng:-79.582341}, {lat:43.791487, lng:-79.418304}],
+       [{lat:43.818559, lng:-79.636488}, {lat:43.636729, lng:-79.574666}],
+       [{lat:43.652630, lng:-79.665950}, {lat:43.742212, lng:-79.435399}],
+       [{lat:43.671459, lng:-79.505081}, {lat:43.748392, lng:-79.358204}],
+       [{lat:43.712475, lng:-79.645364}, {lat:43.654343, lng:-79.388032}],
+       [{lat:43.792916, lng:-79.381485}, {lat:43.643413, lng:-79.483430}],
+       [{lat:43.735344, lng:-79.262770}, {lat:43.621048, lng:-79.586360}],
+       [{lat:43.751637, lng:-79.585673}, {lat:43.803572, lng:-79.356783}],
+       [{lat:43.698660, lng:-79.523859}, {lat:43.637071, lng:-79.498464}]
+     ]
+
       function initMap() {
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+          zoom: 1,
           center: {lat: 43.6628917, lng: -79.4044111}
         });
-        directionsDisplay.setMap(map);
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-        
+
+        for (var i = 0; i < 3; i++) {
+          directionsService = new google.maps.DirectionsService;
+          directionsDisplay = new google.maps.DirectionsRenderer;
+          directionsDisplay.setMap(map);
+          start = trips[i][0];
+          end = trips[i][1];
+          calculateAndDisplayRoute(directionsService, directionsDisplay, start, end);
+        }
         // Define the symbol, using one of the predefined paths ('CIRCLE')
         // supplied by the Google Maps JavaScript API.
         var lineSymbol = {
@@ -52,9 +74,7 @@
           strokeColor: '#393'
         };
         // locations
-        var robarts = {lat:  43.664184, lng: -79.398498};
-        var st_george = {lat: 43.668264, lng:-79.400078};
-        var  ac =  {lat:43.663460, lng:-79.400550};
+
         // Create the polyline and add the symbol to it via the 'icons' property.
         var line = new google.maps.Polyline({
           path: [st_george, robarts, ac],
@@ -67,10 +87,11 @@
         });
         animateCircle(line);
       }
-      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay, start, end) {
         directionsService.route({
-          origin: "Saint George Station, Toronto",
-          destination: "Bahen Centre, Toronto",
+          origin: start,
+          destination: end,
           travelMode: 'DRIVING'
         }, function(response, status) {
           if (status === 'OK') {
@@ -86,7 +107,7 @@
         var time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
         return time;
       }
-        
+
       // Use the DOM setInterval() function to change the offset of the symbol
       // at fixed intervals.
       function animateCircle(line) {
