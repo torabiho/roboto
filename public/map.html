@@ -77,7 +77,7 @@
 
         // Create the polyline and add the symbol to it via the 'icons' property.
         var line = new google.maps.Polyline({
-          path: [st_george, robarts, ac],
+          path: [st_george, robarts, ac], // TODO: Get these from the backend by calling livelocation endpoint
           icons: [{
             icon: lineSymbol,
             offset: '100%'
