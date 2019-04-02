@@ -36,6 +36,21 @@ class App extends Component {
           }
         }
     },false);
+
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.maxHeight){
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      });
+    }
   }
 
   deleteItem = key => {
@@ -65,6 +80,27 @@ class App extends Component {
       })
     }
   }
+  createTable = () => {
+    let table = []
+
+    for (let i = 1; i < 11; i++) {
+      table.push(<div>
+        <button class="accordion">Vehicle {i}<img src={'images/check.png'} style={{paddingLeft: '10px'}} width="10px" alt="check" /></button>
+        <div class="panel">
+          <ul className="vehicleInfo__list">
+              <li><b>Vehicle ID:</b> KBCD765</li>
+              <li><b>Origin:</b> Robarts</li>
+              <li><b>Destination:</b> St. George</li>
+              <li><b>Departure Time:</b> 8:45 AM</li>
+              <li><b>Estimated Arrival Time:</b> 9:05 PM</li>
+              <li><b>Material weight:</b> 600 lb</li>
+            </ul>
+        </div>
+        </div>)
+    }
+    return table
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -75,6 +111,10 @@ class App extends Component {
         <div className="topbar__item">Schedule a trip</div>
       </div>
       <div className="App">
+        <div className="vehicleSelector__container">
+          <h1 className="map__title">Select a vehicle</h1>
+          {this.createTable()}
+        </div>
         <div className="map__container">
           <div className="map__header__container"><h1 className="map__title">Live Map</h1>
           <p>Find real time locations of your vehicle in your fleet below</p>
