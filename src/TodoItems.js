@@ -9,11 +9,24 @@ class TodoItems extends Component {
       </li>
     )
   }
-  render() {
-    const todoEntries = this.props.entries
-    const listItems = todoEntries.map(this.createTasks)
 
-    return <ul className="theList">{listItems}</ul>
+  createGroups = (group, index) => {
+    const groupName = group.name;    
+    const groupItems = group.entries.length > 0 && group.entries.map(this.createTasks);
+
+    return(
+      groupItems && <div key={index}>
+        <h2>{groupName}</h2>
+        <ul className="theList">{groupItems}</ul>
+      </div>
+    );
+  }
+
+  render() {
+    const todoEntries = this.props.entries;    
+    const listItems = todoEntries.map(this.createGroups)
+
+    return <div className="alerts">{listItems}</div>
   }
 }
 

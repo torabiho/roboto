@@ -150,13 +150,13 @@
         timesRun += 1;
 
         if (timesRun === 150) {
-          parent.postMessage({text: "Truck has diverged from its original route", key: getDate()}, "*");
+          parent.postMessage({index: 1, text: "Truck has diverged from its original route", key: getDate()}, "*");
         }
 
         if (timesRun === 199) {
           clearInterval(interval);
-          parent.postMessage({text: "Truck has stopped", key: getDate()}, "*");
-          setTimeout(() => {parent.postMessage({text: "The metal weight has decreased to 400lb  ", key: getDate()}, "*");}, 3000);
+          parent.postMessage({index: 2, text: "Truck has stopped", key: getDate()}, "*");
+          setTimeout(() => {parent.postMessage({index: 1, text: "The metal weight has decreased to 400lb  ", key: getDate()}, "*");}, 3000);
         }
         count = (count + 1) % 200;
         var icons = line.get('icons');

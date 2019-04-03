@@ -9,7 +9,10 @@ class App extends Component {
     super()
     this.state = {
       items: [],
+      alerts: 0,
+      selectedVehicleIndex: -1,
       currentItem: {
+        index: -1,
         text: '',
         key: '',
       },
@@ -28,11 +31,15 @@ class App extends Component {
         //run function//        
         if(data.key){
           const newItem = data;
-          if (newItem.text !== '') {
-            const items = [...this.state.items, newItem]
-            this.setState({
-              items: items,
-              currentItem: { text: '', key: '' },
+          if (newItem.index > -1 && newItem.text !== '') {
+            let tempItems = this.state.items;
+            tempItems[newItem.index].entries.push({text: newItem.text, key: newItem.key});
+            this.setState(prevState => {
+              return {
+                items: tempItems,
+                alerts: prevState.alerts +1 ,
+                currentItem: { index:-1, text: '', key: '' },
+              }
             })
           }
         }
@@ -43,8 +50,12 @@ class App extends Component {
     const filteredItems = this.state.items.filter(item => {
       return item.key !== key
     })
-    this.setState({
-      items: filteredItems,
+
+    this.setState(prevState => {
+      return {
+        items: filteredItems,
+        alerts: prevState.alerts -1 ,
+      }
     })
   }
 
@@ -66,6 +77,18 @@ class App extends Component {
       })
     }
   }
+
+  // alertNumbers = () => {
+  //   const { items } = this.state;
+  //   let sum = 0;
+
+  //   items.forEach((item, i) => {
+  //       sum += item.entries.length
+  //   })
+
+  //   return sum;
+  // }
+
   createTable = async () => {
 
     try {
@@ -74,8 +97,8 @@ class App extends Component {
     // this will re render the view with new data
     this.setState({
       vehicles: json[0].recent_coords.map((post, i) => (
-        <div key={i+1}>
-        <button className="accordion">Vehicle {i+1}
+        <div key={i}>
+        <button className="accordion">Vehicle {i}
           <img src={'images/check.png'} style={{paddingLeft: '10px'}} width="10px" alt="check" />
         </button>
         <div className="panel">
@@ -89,14 +112,20 @@ class App extends Component {
           </ul>
         </div>
       </div>
-      ))
+      )),
+      items: json[0].recent_coords.map((post, i) => ({name: `vehicle ${i}`, entries: []  }))
     });
 
     var acc = document.getElementsByClassName("accordion");
 
     Array.from(acc).forEach((element, i) => {
       element.addEventListener("click", (e) => {
-        !e.target.classList.contains('active') && this.iframe.contentWindow.postMessage({selectedVehicle: i+1}, 'http://localhost:3000/map.html');
+        if(!e.target.classList.contains('active')) {
+          this.iframe.contentWindow.postMessage({selectedVehicle: i}, 'http://localhost:3000/map.html');
+          this.setState({selectedVehicleIndex: i})
+        } else{
+          this.setState({selectedVehicleIndex: -1})
+        }
         e.target.classList.toggle("active");
         var panel = e.target.nextElementSibling;
         if (panel.style.maxHeight){
@@ -140,8 +169,8 @@ class App extends Component {
         <div className="info__container">
           <div className="alerts__container">
             <h1>Alerts</h1>
-            <div className={`alerts__number ${this.state.items.length > 0 ? 'red' : 'green' }`}>{this.state.items.length > 0 ? this.state.items.length : <img src={'images/check.png'} width="70%" alt="check" />}</div>
-            <div className={this.state.items.length > 0 ? 'alert__description' : 'alert__placeholder' }>{this.state.items.length > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</div>
+            <div className={`alerts__number ${this.state.alerts > 0 ? 'red' : 'green' }`}>{this.state.alerts > 0 ? this.state.alerts : <img src={'images/check.png'} width="70%" alt="check" />}</div>
+            <div className={this.state.alerts > 0 ? 'alert__description' : 'alert__placeholder' }>{this.state.alerts > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</div>
           </div>
           <div className="vehicleInfo__container">
             <h1>Vehicle Information</h1>
