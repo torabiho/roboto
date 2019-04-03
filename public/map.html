@@ -83,7 +83,7 @@
       const request = async () => {
         const response = await fetch('http://localhost:8080/livelocation');
         const json = await response.json();
-        
+
         var parsedLocations = [];
         json[0].recent_coords.forEach(function (element) {
           var parsedObj = {};
@@ -94,7 +94,6 @@
           parsedLocations.push(parsedObj);
         });
 
-        console.log('parsedLocations ', parsedLocations);
         // Create the polyline and add the symbol to it via the 'icons' property.
         var line = new google.maps.Polyline({
           path: parsedLocations,
