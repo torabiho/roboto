@@ -140,6 +140,37 @@ class App extends Component {
   }
   }
 
+  alertStatus = () => {
+    const { selectedVehicleIndex, alerts, items } = this.state;
+
+    if(selectedVehicleIndex > -1){
+      const selectedVehicleAlerts = items[selectedVehicleIndex].entries.length;
+      return selectedVehicleAlerts > 0 ? 'red' : 'green';
+    } else{
+      return alerts > 0 ? 'red' : 'green';
+    }
+  }
+
+  renderAlertNumbers = () => {
+    const { selectedVehicleIndex, alerts, items } = this.state;
+    if(selectedVehicleIndex > -1){
+      const selectedVehicleAlerts = items[selectedVehicleIndex].entries.length;
+      return selectedVehicleAlerts > 0 ? selectedVehicleAlerts : <img src={'images/check.png'} width="70%" alt="check" />;
+    } else{
+      return alerts > 0 ? alerts : <img src={'images/check.png'} width="70%" alt="check" />;
+    }
+  }
+
+  renderAlertDescriptions = () => {
+    const { selectedVehicleIndex, alerts, items } = this.state;
+    if(selectedVehicleIndex > -1){
+      const selectedVehicleAlerts = items[selectedVehicleIndex].entries.length;
+      return selectedVehicleAlerts > 0 ? <div className='alert__description'><TodoItems selectedVehicle={selectedVehicleIndex} entries={this.state.items} deleteItem={this.deleteItem} /></div>: <div className='alert__placeholder'>Vehicle {items[selectedVehicleIndex].name} is on track!</div>;
+    } else{
+      return alerts > 0 ? <div className='alert__description'><TodoItems selectedVehicle={selectedVehicleIndex} entries={this.state.items} deleteItem={this.deleteItem} /></div>: <div className='alert__placeholder'>All Vehicles are on track!</div>;
+    }
+  }
+
   render() {
     return (
       <div className="wrapper">
@@ -169,8 +200,8 @@ class App extends Component {
         <div className="info__container">
           <div className="alerts__container">
             <h1>Alerts</h1>
-            <div className={`alerts__number ${this.state.alerts > 0 ? 'red' : 'green' }`}>{this.state.alerts > 0 ? this.state.alerts : <img src={'images/check.png'} width="70%" alt="check" />}</div>
-            <div className={this.state.alerts > 0 ? 'alert__description' : 'alert__placeholder' }>{this.state.alerts > 0 ? <TodoItems entries={this.state.items} deleteItem={this.deleteItem} /> : 'Vehicle is on track!'}</div>
+            <div className={`alerts__number ${this.alertStatus()}`}>{this.renderAlertNumbers()}</div>
+            {this.renderAlertDescriptions()}
           </div>
           <div className="vehicleInfo__container">
             <h1>Vehicle Information</h1>

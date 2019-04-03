@@ -11,14 +11,12 @@ class TodoItems extends Component {
   }
 
   createGroups = (group, index) => {
-    const groupName = group.name;    
+    const groupName = group.name;
+    const selectedVehicle = this.props.selectedVehicle;    
     const groupItems = group.entries.length > 0 && group.entries.map(this.createTasks);
-
+    
     return(
-      groupItems && <div key={index}>
-        <h2>{groupName}</h2>
-        <ul className="theList">{groupItems}</ul>
-      </div>
+      (groupItems && (selectedVehicle === -1 || selectedVehicle === index)) && <div key={index}><h2>{groupName}</h2><ul className="theList">{groupItems}</ul></div>
     );
   }
 
