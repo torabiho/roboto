@@ -176,8 +176,13 @@ h1 {
     flex-direction: column;
   }
 
+  .vehicleSelector__container {
+    width: 100%;
+  }
+
   .map__container {
     width: 100%;
+    margin-top: 20px;
   }
 
   .info__container {
