@@ -38,19 +38,19 @@ class App extends Component {
     },false);
 
     var acc = document.getElementsByClassName("accordion");
-    var i;
 
-    for (i = 0; i < acc.length; i++) {
-      acc[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var panel = this.nextElementSibling;
+    Array.from(acc).forEach((element, i) => {
+      element.addEventListener("click", (e) => {
+        !e.target.classList.contains('active') && this.iframe.contentWindow.postMessage({selectedVehicle: i+1}, 'http://localhost:3000/map.html');
+        e.target.classList.toggle("active");
+        var panel = e.target.nextElementSibling;
         if (panel.style.maxHeight){
           panel.style.maxHeight = null;
         } else {
           panel.style.maxHeight = panel.scrollHeight + "px";
         } 
-      });
-    }
+      })
+    });
   }
 
   deleteItem = key => {
@@ -125,8 +125,7 @@ class App extends Component {
             currentItem={this.state.currentItem}
           /> */}
           </div>
-          {/* <iframe title='map' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d369484.52058328013!2d-79.60103278135236!3d43.65653529382275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d4cb90d7c63ba5%3A0x323555502ab4c477!2sToronto%2C+ON!5e0!3m2!1sen!2sca!4v1551834484898" width="100%" height="680px" frameBorder="0" style={{border:0}} allowFullScreen></iframe> */}
-          <iframe title='map' src="map.html" width="100%" height="680px" frameBorder="0" style={{border:0}} allowFullScreen></iframe>
+          <iframe ref={(node)=> this.iframe = node} title='map' src="map.html" width="100%" height="680px" frameBorder="0" style={{border:0}} allowFullScreen></iframe>
         </div>
         <div className="info__container">
           <div className="alerts__container">
