@@ -16,6 +16,7 @@ class App extends Component {
     }
   }
   componentDidMount(){
+    this.createTable();
     var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
     var eventer = window[eventMethod];
     var messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
@@ -36,21 +37,6 @@ class App extends Component {
           }
         }
     },false);
-
-    var acc = document.getElementsByClassName("accordion");
-
-    Array.from(acc).forEach((element, i) => {
-      element.addEventListener("click", (e) => {
-        !e.target.classList.contains('active') && this.iframe.contentWindow.postMessage({selectedVehicle: i+1}, 'http://localhost:3000/map.html');
-        e.target.classList.toggle("active");
-        var panel = e.target.nextElementSibling;
-        if (panel.style.maxHeight){
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        } 
-      })
-    });
   }
 
   deleteItem = key => {
@@ -80,25 +66,49 @@ class App extends Component {
       })
     }
   }
-  createTable = () => {
-    let table = []
+  createTable = async () => {
 
-    for (let i = 1; i < 11; i++) {
-      table.push(<div key={i}>
-        <button className="accordion">Vehicle {i}<img src={'images/check.png'} style={{paddingLeft: '10px'}} width="10px" alt="check" /></button>
+    try {
+    const response = await fetch('http://localhost:8080/livelocation');
+    const json = await response.json();
+    // this will re render the view with new data
+    this.setState({
+      vehicles: json[0].recent_coords.map((post, i) => (
+        <div key={i+1}>
+        <button className="accordion">Vehicle {i+1}
+          <img src={'images/check.png'} style={{paddingLeft: '10px'}} width="10px" alt="check" />
+        </button>
         <div className="panel">
           <ul className="vehicleInfo__list">
-              <li><b>Vehicle ID:</b> KBCD765</li>
-              <li><b>Origin:</b> Robarts</li>
-              <li><b>Destination:</b> St. George</li>
-              <li><b>Departure Time:</b> 8:45 AM</li>
-              <li><b>Estimated Arrival Time:</b> 9:05 PM</li>
-              <li><b>Material weight:</b> 600 lb</li>
-            </ul>
+            <li><b>Vehicle ID:</b> KBCD765</li>
+            <li><b>Origin:</b> Robarts</li>
+            <li><b>Destination:</b> St. George</li>
+            <li><b>Departure Time:</b> 8:45 AM</li>
+            <li><b>Estimated Arrival Time:</b> 9:05 PM</li>
+            <li><b>Material weight:</b> 600 lb</li>
+          </ul>
         </div>
-        </div>)
-    }
-    return table
+      </div>
+      ))
+    });
+
+    var acc = document.getElementsByClassName("accordion");
+
+    Array.from(acc).forEach((element, i) => {
+      element.addEventListener("click", (e) => {
+        !e.target.classList.contains('active') && this.iframe.contentWindow.postMessage({selectedVehicle: i+1}, 'http://localhost:3000/map.html');
+        e.target.classList.toggle("active");
+        var panel = e.target.nextElementSibling;
+        if (panel.style.maxHeight){
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        } 
+      })
+    });
+  } catch (err) {
+    console.log(err);
+  }
   }
 
   render() {
@@ -113,7 +123,7 @@ class App extends Component {
       <div className="App">
         <div className="vehicleSelector__container">
           <h1 className="map__title">Select a vehicle</h1>
-          {this.createTable()}
+          {this.state.vehicles}
         </div>
         <div className="map__container">
           <div className="map__header__container"><h1 className="map__title">Live Map</h1>
