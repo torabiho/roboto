@@ -1,7 +1,8 @@
-import React, { Component } from 'react'
-import './App.css'
+import React, { Component } from 'react';
+import './App.css';
 // import TodoList from './TodoList'
-import TodoItems from './TodoItems'
+import TodoItems from './TodoItems';
+import request from "request";
 
 class App extends Component {
   inputElement = React.createRef()
@@ -84,9 +85,9 @@ class App extends Component {
     let table = []
 
     for (let i = 1; i < 11; i++) {
-      table.push(<div>
-        <button class="accordion">Vehicle {i}<img src={'images/check.png'} style={{paddingLeft: '10px'}} width="10px" alt="check" /></button>
-        <div class="panel">
+      table.push(<div key={i}>
+        <button className="accordion">Vehicle {i}<img src={'images/check.png'} style={{paddingLeft: '10px'}} width="10px" alt="check" /></button>
+        <div className="panel">
           <ul className="vehicleInfo__list">
               <li><b>Vehicle ID:</b> KBCD765</li>
               <li><b>Origin:</b> Robarts</li>
