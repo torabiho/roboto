@@ -9,7 +9,7 @@ while True:
      '{"vehicle_id":"ABCD123", "locationAndStats":"' + str(lat) + " " + str(lng) + '"}\'' + \
      ' -H "Content-Type: application/json"'
 
-    print(args)
+    #print(args)
     os.system(args)
     time.sleep(1)
     lat += 0.00001

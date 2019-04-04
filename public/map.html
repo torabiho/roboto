@@ -2,111 +2,110 @@
 
 <html>
 
-  <head>
+<head>
 
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 
-    <meta charset="utf-8">
+  <meta charset="utf-8">
 
-    <title>Directions Service</title>
+  <title>Directions Service</title>
 
-    <style>
-
-      /* Always set the map height explicitly to define the size of the div
+  <style>
+    /* Always set the map height explicitly to define the size of the div
 
        * element that contains the map. */
 
-      #map {
+    #map {
 
-        height: 100%;
+      height: 100%;
 
-      }
+    }
 
-      /* Optional: Makes the sample page fill the window. */
+    /* Optional: Makes the sample page fill the window. */
 
-      html, body {
+    html,
+    body {
 
-        height: 100%;
+      height: 100%;
 
-        margin: 0;
+      margin: 0;
 
-        padding: 0;
+      padding: 0;
 
-      }
+    }
 
-      #floating-panel {
+    #floating-panel {
 
-        position: absolute;
+      position: absolute;
 
-        top: 10px;
+      top: 10px;
 
-        left: 25%;
+      left: 25%;
 
-        z-index: 5;
+      z-index: 5;
 
-        background-color: #fff;
+      background-color: #fff;
 
-        padding: 5px;
+      padding: 5px;
 
-        border: 1px solid #999;
+      border: 1px solid #999;
 
-        text-align: center;
+      text-align: center;
 
-        font-family: 'Roboto','sans-serif';
+      font-family: 'Roboto', 'sans-serif';
 
-        line-height: 30px;
+      line-height: 30px;
 
-        padding-left: 10px;
+      padding-left: 10px;
 
-      }
+    }
+  </style>
 
-    </style>
+</head>
 
-  </head>
+<body>
 
-  <body>
+  <div id="map"></div>
 
-    <div id="map"></div>
+  <script>
 
-    <script>
+    var ac = {lat: 43.663460, lng: -79.400550};
 
-    var  ac =  {lat:43.663460, lng:-79.400550};
+    var robarts = {lat: 43.664184, lng: -79.398498};
 
-    var robarts = {lat:  43.664184, lng: -79.398498};
+    var st_george = {lat: 43.668264, lng: -79.400078};
 
-    var st_george = {lat: 43.668264, lng:-79.400078};
-
-    var bahen = {lat:43.659779, lng:-79.396848};
+    var bahen = {lat: 43.659779, lng: -79.396848};
 
 
 
     var trips = [
 
-       [st_george, bahen], // Main use case
+      [st_george, bahen], // Main use case
 
-       [{lat:43.655024, lng:-79.582341}, {lat:43.791487, lng:-79.418304}],
+      [{lat: 43.655024, lng: -79.582341}, {lat: 43.791487, lng: -79.418304}],
 
-       [{lat:43.818559, lng:-79.636488}, {lat:43.636729, lng:-79.574666}],
+      [{lat: 43.818559, lng: -79.636488}, {lat: 43.636729, lng: -79.574666}],
 
-       [{lat:43.652630, lng:-79.665950}, {lat:43.742212, lng:-79.435399}],
+      [{lat: 43.652630, lng: -79.665950}, {lat: 43.742212, lng: -79.435399}],
 
-       [{lat:43.671459, lng:-79.505081}, {lat:43.748392, lng:-79.358204}],
+      [{lat: 43.671459, lng: -79.505081}, {lat: 43.748392, lng: -79.358204}],
 
-       [{lat:43.712475, lng:-79.645364}, {lat:43.654343, lng:-79.388032}],
+      [{lat: 43.712475, lng: -79.645364}, {lat: 43.654343, lng: -79.388032}],
 
-       [{lat:43.792916, lng:-79.381485}, {lat:43.643413, lng:-79.483430}],
+      [{lat: 43.792916, lng: -79.381485}, {lat: 43.643413, lng: -79.483430}],
 
-       [{lat:43.735344, lng:-79.262770}, {lat:43.621048, lng:-79.586360}],
+      [{lat: 43.735344, lng: -79.262770}, {lat: 43.621048, lng: -79.586360}],
 
-       [{lat:43.751637, lng:-79.585673}, {lat:43.803572, lng:-79.356783}],
+      [{lat: 43.751637, lng: -79.585673}, {lat: 43.803572, lng: -79.356783}],
 
-       [{lat:43.698660, lng:-79.523859}, {lat:43.637071, lng:-79.498464}]
+      [{lat: 43.698660, lng: -79.523859}, {lat: 43.637071, lng: -79.498464}]
 
-     ]
+    ]
 
 
 
-      function initMap() {
+    function initMap() {
 
       //   window.addEventListener('message', function (event) {
       //   var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
@@ -117,121 +116,123 @@
       //   }
       // }, false);
 
-        var map = new google.maps.Map(document.getElementById('map'), {
+      var map = new google.maps.Map(document.getElementById('map'), {
 
-          zoom: 1,
+        zoom: 1,
 
-          center: {lat: 43.6628917, lng: -79.4044111}
+        center: {lat: 43.6628917, lng: -79.4044111}
 
+      });
+
+      getTrips(map);
+
+      // Define the symbol, using one of the predefined paths ('CIRCLE')
+
+      // supplied by the Google Maps JavaScript API.
+
+      var lineSymbol = {
+
+        path: google.maps.SymbolPath.CIRCLE,
+
+        scale: 8,
+
+        strokeColor: '#393'
+
+      };
+
+      // locations
+
+
+
+      // Create the polyline and add the symbol to it via the 'icons' property.
+
+      var line = new google.maps.Polyline({
+
+        path: [st_george, robarts, ac],
+
+        icons: [{
+
+          icon: lineSymbol,
+
+          offset: '100%'
+
+        }],
+
+        map: map,
+
+        strokeWeight: 0
+
+      });
+
+      animateCircle(line);
+
+    }
+
+    getTrips = async (map) => {
+      try {
+        const response = await fetch('http://localhost:8080/trips');
+        const json = await response.json();
+        json[0].data.forEach((element, i) => {
+          directionsService = new google.maps.DirectionsService;
+          directionsDisplay = new google.maps.DirectionsRenderer;
+          directionsDisplay.setMap(map);
+          start = trips[i][0];
+          end = trips[i][1];
+          calculateAndDisplayRoute(directionsService, directionsDisplay, start, end);
         });
 
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
 
-        for (var i = 0; i < 3; i++) {
 
-          directionsService = new google.maps.DirectionsService;
+    function calculateAndDisplayRoute(directionsService, directionsDisplay, start, end) {
 
-          directionsDisplay = new google.maps.DirectionsRenderer;
+      directionsService.route({
 
-          directionsDisplay.setMap(map);
+        origin: start,
 
-          start = trips[i][0];
+        destination: end,
 
-          end = trips[i][1];
+        travelMode: 'DRIVING'
 
-          calculateAndDisplayRoute(directionsService, directionsDisplay, start, end);
+      }, function (response, status) {
+
+        if (status === 'OK') {
+
+          directionsDisplay.setDirections(response);
+
+        } else {
+
+          window.alert('Directions request failed due to ' + status);
 
         }
 
-        // Define the symbol, using one of the predefined paths ('CIRCLE')
+      });
 
-        // supplied by the Google Maps JavaScript API.
-
-        var lineSymbol = {
-
-          path:  google.maps.SymbolPath.CIRCLE,
-
-          scale: 8,
-
-          strokeColor: '#393'
-
-        };
-
-        // locations
+    }
 
 
 
-        // Create the polyline and add the symbol to it via the 'icons' property.
+    function getDate() {
 
-        var line = new google.maps.Polyline({
+      var d = new Date();
 
-          path: [st_george, robarts, ac],
+      var time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
 
-          icons: [{
+      return time;
 
-            icon: lineSymbol,
-
-            offset: '100%'
-
-          }],
-
-          map: map,
-
-          strokeWeight: 0
-
-        });
-
-        animateCircle(line);
-
-      }
+    }
 
 
 
-      function calculateAndDisplayRoute(directionsService, directionsDisplay, start, end) {
+    // Use the DOM setInterval() function to change the offset of the symbol
 
-        directionsService.route({
+    // at fixed intervals.
 
-          origin: start,
-
-          destination: end,
-
-          travelMode: 'DRIVING'
-
-        }, function(response, status) {
-
-          if (status === 'OK') {
-
-            directionsDisplay.setDirections(response);
-
-          } else {
-
-            window.alert('Directions request failed due to ' + status);
-
-          }
-
-        });
-
-      }
-
-
-
-      function getDate() {
-
-        var d = new Date();
-
-        var time = d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds();
-
-        return time;
-
-      }
-
-
-
-      // Use the DOM setInterval() function to change the offset of the symbol
-
-      // at fixed intervals.
-
-      function animateCircle(line) {
+    function animateCircle(line) {
       var timesRun = 0;
       var count = 0;
       var interval = window.setInterval(function () {
@@ -243,7 +244,7 @@
 
         if (timesRun === 199) {
           clearInterval(interval);
-          parent.postMessage({index: 2, text: "Truck has stopped", key: getDate()}, "*");
+          parent.postMessage({index: 1, text: "Truck has stopped", key: getDate()}, "*");
           setTimeout(() => {parent.postMessage({index: 1, text: "The metal weight has decreased to 400lb  ", key: getDate()}, "*");}, 3000);
         }
         count = (count + 1) % 200;
@@ -253,14 +254,13 @@
       }, 100);
     }
 
-    </script>
+  </script>
 
-    <script async defer
-
+  <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBC5G2JL3-rH0BsTMjVBJGFHEcis5iFfXY&callback=initMap">
 
     </script>
 
-  </body>
+</body>
 
 </html>

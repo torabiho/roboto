@@ -16,7 +16,7 @@ class TodoItems extends Component {
     const groupItems = group.entries.length > 0 && group.entries.map(this.createTasks);
     
     return(
-      (groupItems && (selectedVehicle === -1 || selectedVehicle === index)) && <div key={index}><h2>{groupName}</h2><ul className="theList">{groupItems}</ul></div>
+      (groupItems && (selectedVehicle === -1 || selectedVehicle === index)) && <div key={index}><h2 style={{textTransform: 'capitalize'}}>{groupName}</h2><ul className="theList">{groupItems}</ul></div>
     );
   }
 
