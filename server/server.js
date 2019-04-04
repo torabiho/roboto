@@ -7,6 +7,7 @@ const port = process.env.PORT || 8080;
 
 let vehicleLocation = require('./models/location');
 let liveLocation = require('./models/livelocation');
+let trips = require('./models/trip');
 
 mongoose.connect('mongodb://admin:admin1@ds229826.mlab.com:29826/roboto', {useNewUrlParser: true });
 let db = mongoose.connection;
@@ -26,6 +27,13 @@ app.get('/livelocation', (req,res) =>{
   liveLocation.find({}).then(docs => res.json(docs));
 });
 
+app.get('/trips', (req,res) =>{ 
+  var trip = new trips({"a":"b"});
+  trip.save();
+  trips.find({}).then(docs => res.json(docs));
+
+});
+
 app.post('/locations', (req,res) =>{
   console.log(req.body.vehicle_id);
   var location = new vehicleLocation({vehicle_id: req.body.vehicle_id, locationAndStats:req.body.locationAndStats });
@@ -33,6 +41,10 @@ app.post('/locations', (req,res) =>{
   console.log("Received new update:");
   console.log(location);
   res.send("Success");
+});
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'../build/index.html'));
 });
 
 app.listen(port, function(){
